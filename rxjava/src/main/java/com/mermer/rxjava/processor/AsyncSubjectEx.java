@@ -3,15 +3,15 @@ package com.mermer.rxjava.processor;
 import com.mermer.common.util.LogType;
 import com.mermer.common.util.Logger;
 
-import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.AsyncSubject;
 
-public class PublishSubjectEx {
+public class AsyncSubjectEx {
 
 	public static void main(String[] args) {
 		
-		//전형적인 hot publisher
-		
-		PublishSubject<Integer> subject = PublishSubject.create();
+		//완료 전까지 아무것도 통지하지 않고 있다가 완료했을 때 마지막으로 통지한 데이터와 완료만 통지
+		//완료 후 구독시에도 수령 받음
+		AsyncSubject<Integer> subject = AsyncSubject.create();
 		
 		subject.subscribe(price -> Logger.log(LogType.ON_NEXT, "# 소비자 1 : " + price));
 		subject.onNext(3500);
@@ -20,6 +20,7 @@ public class PublishSubjectEx {
 		subject.subscribe(price -> Logger.log(LogType.ON_NEXT, "# 소비자 3 : " + price));
 		subject.onNext(3400);
 		
+		subject.onComplete();
 		
 		subject.subscribe(
 					price -> Logger.log(LogType.ON_NEXT, "# 소비자 4 : " + price),
@@ -27,6 +28,6 @@ public class PublishSubjectEx {
 					() -> Logger.log(LogType.ON_COMPLETE)
 				);
 		
-		subject.onComplete();
+		
 	}
 }
