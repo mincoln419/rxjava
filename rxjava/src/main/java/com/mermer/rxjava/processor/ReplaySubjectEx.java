@@ -10,7 +10,7 @@ public class ReplaySubjectEx {
 	public static void main(String[] args) {
 		//완료 전까지 아무것도 통지하지 않고 있다가 완료했을 때 마지막으로 통지한 데이터와 완료만 통지
 		//완료 후 구독시에도 수령 받음
-		ReplaySubject<Integer> subject = ReplaySubject.create();
+		ReplaySubject<Integer> subject = ReplaySubject.create(2);
 		
 		subject.subscribe(price -> Logger.log(LogType.ON_NEXT, "# 소비자 1 : " + price));
 		subject.onNext(3500);
