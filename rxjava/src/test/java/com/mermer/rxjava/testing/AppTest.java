@@ -1,6 +1,6 @@
 package com.mermer.rxjava.testing;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class AppTest {
 
