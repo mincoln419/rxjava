@@ -42,4 +42,9 @@ public class SampleObservable {
 		return Observable.fromIterable(SampleData.salesOfBranchC)
 				.subscribeOn(Schedulers.computation());
 	}
+	
+	public static Observable<Integer> getSpeedOfSectionA(){
+		return Observable.fromArray(SampleData.speedOfSectionA)
+				.subscribeOn(Schedulers.computation());
+	}
 }

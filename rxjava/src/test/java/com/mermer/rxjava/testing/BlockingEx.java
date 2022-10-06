@@ -4,10 +4,14 @@ package com.mermer.rxjava.testing;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Iterator;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import com.mermer.common.Car;
+import com.mermer.common.CarMaker;
+import com.mermer.common.util.Calculator;
 import com.mermer.rxjava.sample.SampleObservable;
 
 import io.reactivex.Observable;
@@ -100,6 +104,48 @@ public class BlockingEx {
 			.blockingGet();
 		
 		assertTrue(totalSales == 992_000_000);
+	}
+	
+	
+	@Test
+	public void getCarStreamIterableTest() {
+		Iterable<CarMaker> iterable = SampleObservable
+				.getCarMakerStream()
+				.blockingIterable();
+		
+		Iterator<CarMaker> iterator = iterable.iterator();
+		
+		assertTrue(iterator.hasNext() == true);
+		
+		assertTrue(iterator.next().equals(CarMaker.CHEVROLET));
+		assertTrue(iterator.next().equals(CarMaker.HYUNDAE));
+		assertTrue(iterator.next().equals(CarMaker.SAMSUNG));
+		assertTrue(iterator.next().equals(CarMaker.SSANGYOUNG));
+		assertTrue(iterator.next().equals(CarMaker.KIA));
+		
+		
+	}
+	
+	
+	@Test
+	public void getCarStreamForeachTest() {
+		SampleObservable.getSpeedOfSectionA()
+			.filter(speed -> speed > 110)
+			.blockingForEach(speed -> assertTrue(speed > 110));
+		
+		
+	}
+	
+	
+	@Test
+	public void avgtempOfSeoulTest() {
+		
+		Calculator calculator = new Calculator();
+		
+		SampleObservable.getSalesOfBranchA()
+			.blockingSubscribe(data -> calculator.setSum(data));
+		
+		assertTrue(calculator.getSum() == 326_000_000);
 	}
 }
 
