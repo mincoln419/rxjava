@@ -5,7 +5,7 @@ $(document).ready(function(){
 
         getWeatherData();
         function getWeatherData() {
-            eventSource = new EventSource("http://localhost:8080/stream/weather");
+            eventSource = new EventSource("http://localhost:8001/stream/weather");
 
             eventSource.onopen = ev => {
                 $("#data-area").empty();
